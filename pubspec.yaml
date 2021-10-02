@@ -16,6 +16,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   dio: ^4.0.0
   fluttertoast: ^8.0.8
+  marquee: ^2.2.0
+  audioplayers: ^0.20.1 #playing audio
 
 dev_dependencies:
   flutter_test:
