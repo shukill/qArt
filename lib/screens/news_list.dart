@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:marquee/marquee.dart';
 import 'package:q_art/core/utility/search_page.dart';
 import 'package:q_art/elements/loader.dart';
 import 'package:q_art/models/news_list.dart';
+import 'package:q_art/screens/products_details_page.dart';
 import 'package:q_art/services/remote_api.dart';
 
 class NewsListPage extends StatefulWidget {
@@ -72,17 +75,142 @@ class _NewsListPageState extends State<NewsListPage> {
                     length: tabs.length,
                     child: Scaffold(
                       appBar: AppBar(
-                        title: const Text('News App'),
+                        backgroundColor: Colors.black87,
+                        title: const Text('Travel World Online'),
                         centerTitle: true,
                         bottom: TabBar(
                           isScrollable: true,
                           indicatorWeight: 6.0,
                           indicatorColor: Colors.black,
-                          unselectedLabelColor: Colors.amber,
+                          unselectedLabelColor: Colors.grey,
                           tabs: tabs,
                         ),
                       ),
+                      drawer: Drawer(
+                        // Add a ListView to the drawer. This ensures the user can scroll
+                        // through the options in the drawer if there isn't enough vertical
+                        // space to fit everything.
+                        child: ListView(
+                          // Important: Remove any padding from the ListView.
+                          padding: EdgeInsets.zero,
+                          children: [
+                            DrawerHeader(
+                              decoration: BoxDecoration(
+                                color: Colors.black87,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 6,
+                                  ),
+                                  Image.network(
+                                    'https://image.shutterstock.com/image-vector/news-label-folded-paper-logo-260nw-1564577314.jpg',
+                                    height: 80,
+                                  ),
+                                  SizedBox(
+                                    height: 16,
+                                  ),
+                                  Text(
+                                    'Travel World Online',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Text(
+                                    'support@travelworldonline.com',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            ListTile(
+                              title: Row(
+                                children: [
+                                  Icon(
+                                    Icons.share_rounded,
+                                    color: Colors.grey,
+                                  ),
+                                  SizedBox(
+                                    width: 30,
+                                  ),
+                                  const Text('Share App'),
+                                ],
+                              ),
+                              onTap: () {
+                                // Update the state of the app
+                                // ...
+                                // Then close the drawer
+                                Navigator.pop(context);
+                              },
+                            ),
+                            ListTile(
+                              title: Row(
+                                children: [
+                                  Icon(
+                                    Icons.dashboard,
+                                    color: Colors.grey,
+                                  ),
+                                  SizedBox(
+                                    width: 30,
+                                  ),
+                                  const Text('More Apps'),
+                                ],
+                              ),
+                              onTap: () {
+                                // Update the state of the app
+                                // ...
+                                // Then close the drawer
+                                Navigator.pop(context);
+                              },
+                            ),
+                            ListTile(
+                              title: Row(
+                                children: [
+                                  Icon(
+                                    Icons.checklist_sharp,
+                                    color: Colors.grey,
+                                  ),
+                                  SizedBox(
+                                    width: 30,
+                                  ),
+                                  const Text('Privacy Policy'),
+                                ],
+                              ),
+                              onTap: () {
+                                // Update the state of the app
+                                // ...
+                                // Then close the drawer
+                                Navigator.pop(context);
+                              },
+                            ),
+                            ListTile(
+                              title: Row(
+                                children: [
+                                  Icon(
+                                    Icons.people,
+                                    color: Colors.grey,
+                                  ),
+                                  SizedBox(
+                                    width: 30,
+                                  ),
+                                  const Text('About Us'),
+                                ],
+                              ),
+                              onTap: () {
+                                // Update the state of the app
+                                // ...
+                                // Then close the drawer
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
                       floatingActionButton: FloatingActionButton(
+                        backgroundColor: Colors.black87,
                         tooltip: 'Search Your Product',
                         onPressed: () => showSearch(
                           context: context,
@@ -144,12 +272,36 @@ class MyList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: mylist.length,
-      itemBuilder: (context, index) {
-        Hotnew myArticles = mylist[index];
-        return ArticleTile(news: myArticles);
-      },
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+              color: Colors.black26,
+              height: 20,
+              child: Marquee(
+                text: 'Some sample text that takes some space.',
+                style: TextStyle(fontWeight: FontWeight.bold),
+                scrollAxis: Axis.horizontal,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                blankSpace: 20.0,
+                velocity: 100.0,
+                pauseAfterRound: Duration(seconds: 1),
+                startPadding: 10.0,
+                accelerationDuration: Duration(seconds: 1),
+                accelerationCurve: Curves.linear,
+                decelerationDuration: Duration(milliseconds: 500),
+                decelerationCurve: Curves.easeOut,
+              )),
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: mylist.length,
+            itemBuilder: (context, index) {
+              Hotnew myArticles = mylist[index];
+              return ArticleTile(news: myArticles);
+            },
+          ),
+        ],
+      ),
     );
   }
 }
@@ -165,20 +317,42 @@ class ArticleTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // onTap: () => Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (ctx) => ProductsDetailPage(
-      //       product: myProducts,
-      //     ),
-      //   ),
-      // ),
-      child: Container(
-        color: Colors.teal,
-        padding: const EdgeInsets.all(10.0),
-        margin: const EdgeInsets.all(10.0),
-        child: Text(news.videocate.toString()),
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (ctx) => ProductsDetailPage(
+            hotnew: news,
+          ),
+        ),
       ),
+      child: Card(
+          // padding: const EdgeInsets.all(10.0),
+          margin: const EdgeInsets.all(10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.network(
+                news.image,
+                height: 100,
+                width: MediaQuery.of(context).size.width * 0.3,
+                fit: BoxFit.cover,
+              ),
+              Container(
+                height: 120,
+                width: MediaQuery.of(context).size.width * 0.5,
+                child: Center(
+                  child: Text(
+                    news.videoname,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              Icon(Icons.arrow_forward_ios),
+            ],
+          )),
     );
   }
 }

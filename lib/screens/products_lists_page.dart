@@ -96,14 +96,14 @@ class ProductTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (ctx) => ProductsDetailPage(
-            product: myProducts,
-          ),
-        ),
-      ),
+      // onTap: () => Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (ctx) => ProductsDetailPage(
+      //       product: myProducts,
+      //     ),
+      //   ),
+      // ),
       child: Container(
         color: Colors.teal,
         padding: const EdgeInsets.all(10.0),
